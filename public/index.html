@@ -1,20 +1,31 @@
 <html>
 
 <head>
+
+    <style>
+        .red {
+            color: red;
+        }
+    </style>
     <script>
         var socket = new WebSocket('ws://localhost:8080');
         socket.addEventListener('open', function (event) {
             console.log("connected", event);
         });
         socket.addEventListener('message', function (event) {
-            console.log(event);
+            console.log(JSON.parse(event.data));
+
             const p = document.createElement("p");
-            const text = document.createTextNode(event.data);
+            const parse = JSON.parse(event.data);
+            const text = document.createTextNode(parse.tweet);
+            if(parse.test === true) {
+                p.classList.add("red");
+            }
             p.appendChild(text);
             document.body.appendChild(p);
 
+            //if(test === false)
             //console.log("new message", event.data);
-
             socket.send("client message");
         });
     </script>

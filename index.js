@@ -16,7 +16,7 @@ const twitterClient = new Twitter ({
 });
 
 
-const {stringify, tweetExtractor} = require("./transform");
+const {stringify, tweetExtractor, moderator} = require("./transform");
 
 const server = http.createServer();
 const wsServer = new WebSocket.Server({ server });
@@ -47,5 +47,5 @@ wsServer.on("connection", ws => {
 
     const stream = new TwitterStream(twitterClient);
     stream.track("macron");
-    stream.pipe(tweetExtractor).pipe(stringify).pipe(socketStr);
+    stream.pipe(tweetExtractor).pipe(moderator).pipe(stringify).pipe(socketStr);
 });
