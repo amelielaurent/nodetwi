@@ -1,9 +1,13 @@
-const Twitter = require("twitter");
-const dotenv = require("dotenv");
+const fs = require("fs");
+const http = require("http");
+const WebSocket = require("ws");
+const SocketStream = require("./SocketStream");
 const TwitterStream = require("./TwitterStream");
-const {Transform}= require("stream");
+const Twitter = require("twitter");
 
+const dotenv = require("dotenv");
 dotenv.config();
+
 const twitterClient = new Twitter ({
     consumer_key: process.env.TWITTER_CONSUMER_KEY,
     consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
@@ -11,34 +15,37 @@ const twitterClient = new Twitter ({
     access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
 });
 
-// const stream = twitterClient.stream("statuses/filter", {track: "javascript"});
-// stream.on("data", tweet => {
-//     console.log(tweet);
-// });
 
-const stream = new TwitterStream(twitterClient);
-stream.track("javascript"); //On passe le mot clé
-//stream.pipe(process.stdout);
+const {stringify, tweetExtractor} = require("./transform");
 
-const tweetExtractor = new Transform({
-    readableObjetMode: true,
-    writableObjectMode: true,
+const server = http.createServer();
+const wsServer = new WebSocket.Server({ server });
+// const wss = new WebSocket.Server({ server: server });
 
-    transform (chunk, encoding, callback){
-        const newChunk = chunk.text;
-        this.push(newChunk);
-        callback();
-    }
-})
+server.on("request", (request, response) => { //Ecoute l'évenement request
+    const fileSrc = fs.createReadStream("./public/index.html"); //Crée le stream
+    fileSrc.pipe(response);
+});
 
-const stringify = new Transform ({
-    writableObjectMode: true,
+server.listen(8080);
 
-    transform (chunk, encoding, callback){
-        const newChunk = JSON.stringify(chunk);
-        this.push(newChunk);
-        callback();
-    }
-})
+wsServer.on("connection", ws => {
+    console.log("connection", ws);
+    // const message = {
+    //     id: 12,
+    //     content: "data from server"
+    // };
+    // const messageStr = JSON.stringify(message);
+    // ws.send(messageStr);
 
-stream.pipe(tweetExtractor).pipe(stringify).pipe(process.stdout);
+    ws.on("message", message => {
+        console.log("message from client: ", message);
+    });
+
+    const socketStr = new SocketStream(ws);
+    process.stdin.pipe(socketStr);
+
+    const stream = new TwitterStream(twitterClient);
+    stream.track("macron");
+    stream.pipe(tweetExtractor).pipe(stringify).pipe(socketStr);
+});

@@ -1,0 +1,25 @@
+<html>
+
+<head>
+    <script>
+        var socket = new WebSocket('ws://localhost:8080');
+        socket.addEventListener('open', function (event) {
+            console.log("connected", event);
+        });
+        socket.addEventListener('message', function (event) {
+            console.log(event);
+            const p = document.createElement("p");
+            const text = document.createTextNode(event.data);
+            p.appendChild(text);
+            document.body.appendChild(p);
+
+            //console.log("new message", event.data);
+
+            socket.send("client message");
+        });
+    </script>
+</head>
+
+<body></body>
+
+</html>
