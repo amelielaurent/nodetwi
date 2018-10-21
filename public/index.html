@@ -1,8 +1,16 @@
 <html>
 
 <head>
-
+    <meta charset="UTF-8">
     <style>
+        /*body {*/
+            /*display: flex;*/
+            /*flex-direction: column-reverse;*/
+        /*}*/
+        h1 {
+            text-align: center;
+            color: palevioletred;
+        }
         .red {
             color: red;
         }
@@ -14,7 +22,6 @@
         });
         socket.addEventListener('message', function (event) {
             console.log(JSON.parse(event.data));
-
             const p = document.createElement("p");
             const parse = JSON.parse(event.data);
             const text = document.createTextNode(parse.tweet);
@@ -31,6 +38,8 @@
     </script>
 </head>
 
-<body></body>
+<body>
+<h1> Création d'un modérateur, tous les tweets rouges possèdent des insultes </h1>
+</body>
 
 </html>
