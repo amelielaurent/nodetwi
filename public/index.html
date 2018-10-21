@@ -2,14 +2,14 @@
 
 <head>
     <meta charset="UTF-8">
+    <title> Projet Node.js Twitter</title>
     <style>
-        /*body {*/
-            /*display: flex;*/
-            /*flex-direction: column-reverse;*/
-        /*}*/
         h1 {
             text-align: center;
             color: palevioletred;
+        }
+        h2 {
+            color: mediumvioletred;
         }
         .red {
             color: red;
@@ -20,26 +20,33 @@
         socket.addEventListener('open', function (event) {
             console.log("connected", event);
         });
+
+        let count = 0;
         socket.addEventListener('message', function (event) {
             console.log(JSON.parse(event.data));
             const p = document.createElement("p");
             const parse = JSON.parse(event.data);
             const text = document.createTextNode(parse.tweet);
+
             if(parse.test === true) {
                 p.classList.add("red");
+
+                //Compteur pour le nombre de tweets insultants
+                count += 1;
+                console.log(count);
             }
             p.appendChild(text);
             document.body.appendChild(p);
 
-            //if(test === false)
-            //console.log("new message", event.data);
+            document.getElementById("count").innerHTML = count;
             socket.send("client message");
         });
     </script>
 </head>
 
 <body>
-<h1> Création d'un modérateur, tous les tweets rouges possèdent des insultes </h1>
+    <h1> Création d'un modérateur : tous les tweets rouges possèdent des insultes </h1>
+    <h2> Nombre de tweets insultants : <span id="count"></span></h2>
 </body>
 
 </html>
