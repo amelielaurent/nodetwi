@@ -8,9 +8,22 @@
             text-align: center;
             color: palevioletred;
         }
-        h2 {
+        h2, h3 {
             color: mediumvioletred;
         }
+        button {
+            color: palevioletred;
+            background-color: white;
+            border: 2px solid palevioletred;
+            padding: 0.4rem;
+            margin-right: 0.5rem;
+        }
+        button:hover {
+            color: white;
+            background-color: palevioletred;
+            border: 2px solid palevioletred;
+        }
+
         .red {
             color: red;
         }
@@ -30,23 +43,78 @@
 
             if(parse.test === true) {
                 p.classList.add("red");
+                // const button = document.createElement('button');
+                // button.innerHTML = "Signaler";
+                // p.classList.add("red").appendChild(button);
+
+                const button = document.createElement('button');
+                button.innerHTML = "Signaler";
+                p.appendChild(button);
 
                 //Compteur pour le nombre de tweets insultants
                 count += 1;
                 console.log(count);
+
+
             }
             p.appendChild(text);
             document.body.appendChild(p);
 
+            const remove = function(){
+                this.parentNode.remove();
+                //count -=1;
+                console.log('click');
+            };
+
+            const red = document.querySelectorAll('.red');
+
+            const button = document.querySelectorAll('button');
+            //console.log(button);
+            //p.appendChild(red);
+
+            console.log(red);
+
+            for (let i = 0, len = red.length; i < len; i++) {
+                //count -=1;
+                button[i].addEventListener('click', remove, false);
+            }
+
+
+            // for (let i = 0, len = red.length; i < len; i++) {
+            //     red[i].addEventListener('click', remove, false);
+            //     console.log('click');
+            // }
+
+            // document.querySelector("p.red").addEventListener("click", function(e){
+            //     console.log("click");
+            //     e.preventDefault();
+            //     document.querySelector("p.red").innerHTML = "";
+            // });
+
+            //Supprimer les tweets via le côté client
+            // const insult = document.querySelector('.red');
+            //
+            // if(insult) {
+            //     insult.addEventListener('click', function(e){
+            //         e.preventDefault();
+            //         insult.innerHTML = "";
+            //         // count -= 1;
+            //         console.log('click');
+            //         console.log(count);
+            //     });
+            // }
+
             document.getElementById("count").innerHTML = count;
             socket.send("client message");
         });
+
     </script>
 </head>
 
 <body>
     <h1> Création d'un modérateur : tous les tweets rouges possèdent des insultes </h1>
     <h2> Nombre de tweets insultants : <span id="count"></span></h2>
+    <h3> Cliquez sur le bouton signaler pour supprimer les tweets insultants</h3>
 </body>
 
 </html>
