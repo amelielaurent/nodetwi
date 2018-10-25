@@ -35,7 +35,11 @@
         });
 
         let count = 0;
+        //let suppr = 0;
+
         socket.addEventListener('message', function (event) {
+            //console.log(event);
+            //console.log(event.data.truncated ? event.data.extended_tweet.full_text : event.data.text);
             console.log(JSON.parse(event.data));
             const p = document.createElement("p");
             const parse = JSON.parse(event.data);
@@ -54,21 +58,30 @@
                 //Compteur pour le nombre de tweets insultants
                 count += 1;
                 console.log(count);
-
-
             }
+
             p.appendChild(text);
             document.body.appendChild(p);
 
             const remove = function(){
                 this.parentNode.remove();
                 //count -=1;
-                console.log('click');
+                //console.log('click');
             };
 
             const red = document.querySelectorAll('.red');
 
             const button = document.querySelectorAll('button');
+
+            // const unibutton = document.querySelector('button');
+            // console.log(unibutton);
+            // unibutton.addEventListener("click", function(e){
+            //     e.preventDefault();
+            //     suppr = count-1;
+            //     console.log("compter");
+            //     console.log(suppr);
+            //     console.log(count);
+            // });
             //console.log(button);
             //p.appendChild(red);
 
@@ -77,19 +90,9 @@
             for (let i = 0, len = red.length; i < len; i++) {
                 //count -=1;
                 button[i].addEventListener('click', remove, false);
+
             }
 
-
-            // for (let i = 0, len = red.length; i < len; i++) {
-            //     red[i].addEventListener('click', remove, false);
-            //     console.log('click');
-            // }
-
-            // document.querySelector("p.red").addEventListener("click", function(e){
-            //     console.log("click");
-            //     e.preventDefault();
-            //     document.querySelector("p.red").innerHTML = "";
-            // });
 
             //Supprimer les tweets via le côté client
             // const insult = document.querySelector('.red');
@@ -105,6 +108,7 @@
             // }
 
             document.getElementById("count").innerHTML = count;
+            //document.getElementById("suppr").innerHTML = suppr;
             socket.send("client message");
         });
 
