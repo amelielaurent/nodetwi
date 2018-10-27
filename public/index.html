@@ -11,14 +11,14 @@
         h2, h3 {
             color: mediumvioletred;
         }
-        button {
+        button, input[type="button"] {
             color: palevioletred;
             background-color: white;
             border: 2px solid palevioletred;
             padding: 0.4rem;
             margin-right: 0.5rem;
         }
-        button:hover {
+        button:hover, input[type="button"]:hover {
             color: white;
             background-color: palevioletred;
             border: 2px solid palevioletred;
@@ -109,6 +109,12 @@
 
             document.getElementById("count").innerHTML = count;
             //document.getElementById("suppr").innerHTML = suppr;
+
+            // function getValue(){
+            //     const value = document.getElementById("input").value;
+            //     console.log(value);
+            // }
+
             socket.send("client message");
         });
 
@@ -119,6 +125,22 @@
     <h1> Création d'un modérateur : tous les tweets rouges possèdent des insultes </h1>
     <h2> Nombre de tweets insultants : <span id="count"></span></h2>
     <h3> Cliquez sur le bouton signaler pour supprimer les tweets insultants</h3>
+    <form>
+        <fieldset>
+            <legend>Il manque une insulte ?</legend>
+            Ajouter là ! <br>
+            <input name="text" type="text" id="input" value=""><br><br>
+            <input type="button" value="Envoyer" id="envoyer" >
+        </fieldset>
+    </form>
+
+    <script>
+        const input = document.getElementById("envoyer");
+        input.addEventListener("click", function(e){
+            const mot = document.getElementById("input").value;
+            console.log(mot);
+        });
+    </script>
 </body>
 
 </html>

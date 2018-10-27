@@ -32,7 +32,11 @@ const moderator = new Transform ({
         //Le test va permettre de savoir si au moins un de ces mots se trouvent dans le tweet
         // Ce test est sensible à la casse
         const conditions = ["de","emmerde","merde", "merdeux", "connard", "Putain", "ptn", "fdp", "salope", "putain", "magouilleurs", "abruti"];
+        if(this.mot){
+            const ajout = conditions.push(this.mot);
+        }
         const test = conditions.some(el => chunk.includes(el));
+        //console.log(conditions);
         //const newChunk = chunk +' ===> '+ test;
         // this.push(newChunk);
         this.push({

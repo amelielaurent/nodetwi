@@ -4,6 +4,7 @@ const WebSocket = require("ws");
 const SocketStream = require("./SocketStream");
 const TwitterStream = require("./TwitterStream");
 const Twitter = require("twitter");
+// const Value = require('./Form');
 
 const dotenv = require("dotenv");
 dotenv.config();
@@ -46,6 +47,10 @@ wsServer.on("connection", ws => {
     process.stdin.pipe(socketStr);
 
     const stream = new TwitterStream(twitterClient);
+    // if(value) {
+    //     console.log("value");
+    //     stream.track(getValue(this.value));
+    // } else
     stream.track("macron");
     stream.pipe(tweetExtractor).pipe(moderator).pipe(stringify).pipe(socketStr);
 });
