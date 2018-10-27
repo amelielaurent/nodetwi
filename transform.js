@@ -31,10 +31,13 @@ const moderator = new Transform ({
 
         //Le test va permettre de savoir si au moins un de ces mots se trouvent dans le tweet
         // Ce test est sensible à la casse
-        const conditions = ["de","emmerde","merde", "merdeux", "connard", "Putain", "ptn", "fdp", "salope", "putain", "magouilleurs", "abruti"];
-        if(this.mot){
-            const ajout = conditions.push(this.mot);
-        }
+        //Si il n'y a pas de tweets insultants, essayez plusieurs fois, ou alors ajoutez un mot commun et cela marchera
+        const conditions = ["mongol","pd", "andouille","débile","connasse", "bouffon","boulet","enflure","fumier","gogol","crétin","branleur","biatch","batard","blaireau","idiot","couillon","enfoiré","foutre","enculé","salaud","couille","gueule","emmerde","merde", "merdeux", "connard", "Putain", "ptn", "fdp", "salope", "putain", "magouilleurs", "abruti"];
+
+        //Essai pour ajouter le mot tapé dans la liste des insultes
+        // if(this.mot){
+        //     const ajout = conditions.push(this.mot);
+        // }
         const test = conditions.some(el => chunk.includes(el));
         //console.log(conditions);
         //const newChunk = chunk +' ===> '+ test;

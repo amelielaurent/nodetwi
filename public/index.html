@@ -35,7 +35,6 @@
         });
 
         let count = 0;
-        //let suppr = 0;
 
         socket.addEventListener('message', function (event) {
             //console.log(event);
@@ -47,9 +46,6 @@
 
             if(parse.test === true) {
                 p.classList.add("red");
-                // const button = document.createElement('button');
-                // button.innerHTML = "Signaler";
-                // p.classList.add("red").appendChild(button);
 
                 const button = document.createElement('button');
                 button.innerHTML = "Signaler";
@@ -63,28 +59,14 @@
             p.appendChild(text);
             document.body.appendChild(p);
 
+            //Fonction pour supprimer les tweets
             const remove = function(){
                 this.parentNode.remove();
                 //count -=1;
-                //console.log('click');
             };
 
             const red = document.querySelectorAll('.red');
-
             const button = document.querySelectorAll('button');
-
-            // const unibutton = document.querySelector('button');
-            // console.log(unibutton);
-            // unibutton.addEventListener("click", function(e){
-            //     e.preventDefault();
-            //     suppr = count-1;
-            //     console.log("compter");
-            //     console.log(suppr);
-            //     console.log(count);
-            // });
-            //console.log(button);
-            //p.appendChild(red);
-
             console.log(red);
 
             for (let i = 0, len = red.length; i < len; i++) {
@@ -94,27 +76,7 @@
             }
 
 
-            //Supprimer les tweets via le côté client
-            // const insult = document.querySelector('.red');
-            //
-            // if(insult) {
-            //     insult.addEventListener('click', function(e){
-            //         e.preventDefault();
-            //         insult.innerHTML = "";
-            //         // count -= 1;
-            //         console.log('click');
-            //         console.log(count);
-            //     });
-            // }
-
             document.getElementById("count").innerHTML = count;
-            //document.getElementById("suppr").innerHTML = suppr;
-
-            // function getValue(){
-            //     const value = document.getElementById("input").value;
-            //     console.log(value);
-            // }
-
             socket.send("client message");
         });
 
@@ -135,6 +97,7 @@
     </form>
 
     <script>
+        //Permet de récupérer la valeur inscrite dans le formulaire au click
         const input = document.getElementById("envoyer");
         input.addEventListener("click", function(e){
             const mot = document.getElementById("input").value;
