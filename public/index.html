@@ -37,7 +37,6 @@
         let count = 0;
 
         socket.addEventListener('message', function (event) {
-            //console.log(event);
             //console.log(event.data.truncated ? event.data.extended_tweet.full_text : event.data.text);
             console.log(JSON.parse(event.data));
             const p = document.createElement("p");
@@ -75,7 +74,15 @@
 
             }
 
+            // const mot = document.getElementById("input").value;
+            // const input = document.getElementById("envoyer");
+            // input.addEventListener("click", function(e){
+            //     const mot = document.getElementById("input").value;
+            //     console.log(mot);
+            // });
 
+            //Essai pour envoyer le mot du client au serveur
+            //socket.send(mot);
             document.getElementById("count").innerHTML = count;
             socket.send("client message");
         });

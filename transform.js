@@ -35,13 +35,11 @@ const moderator = new Transform ({
         const conditions = ["mongol","pd", "andouille","débile","connasse", "bouffon","boulet","enflure","fumier","gogol","crétin","branleur","biatch","batard","blaireau","idiot","couillon","enfoiré","foutre","enculé","salaud","couille","gueule","emmerde","merde", "merdeux", "connard", "Putain", "ptn", "fdp", "salope", "putain", "magouilleurs", "abruti"];
 
         //Essai pour ajouter le mot tapé dans la liste des insultes
-        // if(this.mot){
-        //     const ajout = conditions.push(this.mot);
+        // if(mot){
+        //     const ajout = conditions.push(mot);
+        //     console.log(ajout);
         // }
         const test = conditions.some(el => chunk.includes(el));
-        //console.log(conditions);
-        //const newChunk = chunk +' ===> '+ test;
-        // this.push(newChunk);
         this.push({
             tweet: chunk,
             test

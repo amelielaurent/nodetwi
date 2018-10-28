@@ -16,4 +16,5 @@ Enfin, il est possible pour les utilisateurs de mon application de supprimer ces
 
 J'aurais aimé pouvoir décrémenter mon compteur lorsque l'utilisateur supprime le tweet.
 Limiter le nombre de tweets reçus (avec get on peut mettre en paramètre count, mais pas en stream j'ai l'impression).
-J'aurais également voulu que le client puisse ajouter une insulte à filtrer via le formulaire.
+J'aurais également voulu que le client puisse ajouter une insulte à filtrer via le formulaire. Mais je n'ai pas réussi à
+faire passer les données entrées par le client dans le transform.

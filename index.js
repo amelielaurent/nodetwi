@@ -40,6 +40,7 @@ wsServer.on("connection", ws => {
 
     ws.on("message", message => {
         console.log("message from client: ", message);
+        //stream.track(message);
     });
 
     const socketStr = new SocketStream(ws);
